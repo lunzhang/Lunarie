@@ -1,4 +1,4 @@
-Lunarie.controller('LunarieController', function($scope,$timeout) {
+Loupon.controller('LouponController', function($scope,$timeout) {
 
 
 });

@@ -1,4 +1,4 @@
-Lunarie.directive('animation', function () {
+Loupon.directive('animation', function () {
   return {
     restrict:'E',
     link:function (scope, element, attribute) {
