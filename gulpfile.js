@@ -8,21 +8,21 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-  sass: ['./lunarie/**/*.scss']
+  sass: ['./ng/**/*.scss']
 };
 
 gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
-  gulp.src('./lunarie/css/*.scss')
+  gulp.src('./ng/css/*.scss')
     .pipe(sass())
     .on('error', sass.logError)
-    .pipe(gulp.dest('./lunarie/css/'))
+    .pipe(gulp.dest('./ng/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./lunarie/css/'))
+    .pipe(gulp.dest('./ng/css/'))
     .on('end', done);
 });
 
