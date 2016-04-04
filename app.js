@@ -6,6 +6,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var app = express();
+var scheduler = require('./schedule/schedule');
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/test');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,7 +45,6 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
 // production error handler
 // no stacktraces leaked to user
 else{

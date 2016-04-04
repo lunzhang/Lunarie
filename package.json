@@ -13,8 +13,10 @@
     "express": "~4.12.4",
     "jade": "~1.9.2",
     "mongodb": "*",
+    "mongoose": "^4.4.10",
     "monk": "*",
     "morgan": "~1.5.3",
+    "node-schedule": "^1.1.0",
     "serve-favicon": "~2.2.1",
     "socket.io": "^1.4.5"
   },
