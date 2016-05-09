@@ -6,11 +6,12 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var app = express();
-var scheduler = require('./schedule/schedule');
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/test');
-
+mongoose.connection.on('error', function (err) {
+    console.log(err);
+}); 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
