@@ -6,20 +6,25 @@ var User = mongoose.model('User');
 
 module.exports.register = function (req, res) {
     
-    var user = new User();
-    
-    user.name = req.body.name;
-    user.email = req.body.email;
-    
-    user.setPassword(req.body.password);
-    
-    user.save(function (err) {
-        var token;
-        token = user.generateJwt();
-        res.status(200);
-        res.json({
-            "token" : token
-        });
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (err) { return err; }
+
+        if (user) {
+            res.status(400).json({message:'User already exists'});
+        }
+        else {
+            var newUser = new User();
+            newUser.email = req.body.email;
+            newUser.setPassword(req.body.password);
+            newUser.save(function (err) {
+                var token;
+                token = newUser.generateJwt();
+                res.status(200);
+                res.json({
+                    "token" : token
+                });
+            });
+        }
     });
 
 };
