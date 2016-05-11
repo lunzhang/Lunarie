@@ -5,14 +5,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+require('./api/db/db');
+require('./api/config/passport');
+var passport = require('passport');
+var routesApi = require('./api/routes/index');
 var app = express();
-var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test');
-mongoose.connection.on('error', function (err) {
-    console.log(err);
-}); 
-// view engine setup
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -22,9 +21,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'ng')));
+app.use(passport.initialize());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', routesApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

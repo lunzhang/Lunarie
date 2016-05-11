@@ -6,12 +6,13 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var nodemon = require('gulp-nodemon');
+var livereload = require('gulp-livereload');
 
 var paths = {
   sass: ['./ng/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
   gulp.src('./ng/css/*.scss')
@@ -27,7 +28,16 @@ gulp.task('sass', function(done) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+    gulp.watch(paths.sass, ['sass']);
+    nodemon({
+        // the script to run the app
+        script: './bin/www.js',
+        ext: 'js'
+    }).on('restart', function () {
+        // when the app has restarted, run livereload.
+        gulp.src('./bin/www.js')
+			.pipe(livereload());
+    });
 });
 
 gulp.task('install', ['git-check'], function() {
