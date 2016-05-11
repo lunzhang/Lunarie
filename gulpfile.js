@@ -8,11 +8,19 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var nodemon = require('gulp-nodemon');
 var livereload = require('gulp-livereload');
+var uglify = require('gulp-uglify');
 
 var paths = {
-  sass: ['./ng/**/*.scss']
+    sass: ['./ng/**/*.scss'],
+    controllers: ['./ng/**/*.js']
 };
 
+gulp.task('controllers', function () {
+    return gulp.src(['ng/controllers/*.js','ng/auth/**/*.js'])
+    .pipe(concat('controllers.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('ng'));
+});
 
 gulp.task('sass', function(done) {
   gulp.src('./ng/css/*.scss')
@@ -29,6 +37,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
     gulp.watch(paths.sass, ['sass']);
+    gulp.watch(paths.controllers, ['controllers']);
     nodemon({
         // the script to run the app
         script: './bin/www.js',
