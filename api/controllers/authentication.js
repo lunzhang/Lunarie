@@ -2,8 +2,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-
-
 module.exports.register = function (req, res) {
     
     User.findOne({ email: req.body.email }, function (err, user) {
