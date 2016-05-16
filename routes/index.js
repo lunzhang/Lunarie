@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.sendfile('ng/index.html');
+  res.sendfile('ng/chart.html');
 });
 
 module.exports = router;

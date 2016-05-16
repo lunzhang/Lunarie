@@ -48,3 +48,4 @@ process.on('SIGTERM', function () {
 // BRING IN YOUR SCHEMAS & MODELS
 require('./model/users');
 require('./model/messages');
+require('./model/rates');

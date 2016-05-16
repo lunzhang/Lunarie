@@ -11,7 +11,6 @@ var passport = require('passport');
 var routesApi = require('./api/routes/index');
 var app = express();
 
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -57,5 +56,5 @@ else{
   });
 });
 }
-
+//require('./api/db/rates.reader');
 module.exports = app;
