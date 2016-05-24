@@ -92,4 +92,4 @@ function onListening() {
 /**
 * socket io 
 */
-require('../api/routes/socket').initSocket(server);
+require('../api/routes/spybox').spyboxSocket(server);
