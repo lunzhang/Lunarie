@@ -30,6 +30,14 @@ router.get('/tv', function (req, res) {
         });
     });
 });
+router.get('/realtimenews', function (req, res) {
+    fs.readFile('realtimenews.txt', function (err, data) {
+        res.status(200);
+        res.json({
+            "realtimenews" : data.toString()
+        });
+    });
+});
 // authentication
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

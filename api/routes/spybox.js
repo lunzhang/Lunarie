@@ -1,9 +1,10 @@
 ﻿var shortid = require('shortid');
 var express = require('express');
+var wordsBox = require('../db/word.reader');
 var router = express.Router();
 
 module.exports = {
-
+    
     spyboxSocket: function (server) {
         
         var io = require('socket.io')(server);
@@ -14,20 +15,25 @@ module.exports = {
             socket.on('create', function () {
                 var roomId = shortid.generate();
                 socket.join(roomId);
-                rooms[roomId] = [];
-                rooms[roomId].push({
+                rooms[roomId] = {
+                    box: [],
+                    spy: {},
+                    inPlay:false
+                };
+                rooms[roomId].box.push({
                     name: socket.name,
-                    id: socket.id
+                    id: socket.id,
+                    vote:0
                 });
                 socket.emit('roomId', {
-                    room: rooms[roomId],
+                    room: rooms[roomId].box,
                     roomId: roomId
                 });
             });
             
             socket.on('leave', function (data) {
                 var roomId = data.roomId;
-                var room = rooms[roomId];
+                var room = rooms[roomId].box;
                 if (room) {
                     for (var i = 0; i < room.length; i++) {
                         var spy = room[i];
@@ -46,14 +52,21 @@ module.exports = {
             
             socket.on('join', function (data) {
                 var roomId = data.roomId;
-                var room = rooms[roomId];
+                var room = rooms[roomId].box;
+                var inPlay = rooms[roomId].inPlay;
                 if (room) {
-                    socket.join(roomId);
-                    room.push({
-                        name: socket.name,
-                        id: socket.id
-                    });
-                    io.to(roomId).emit('room', room);
+                    if (inPlay) {
+                        socket.emit('event', 'Game is in progress');
+                    }
+                    else {
+                        socket.join(roomId);
+                        room.push({
+                            name: socket.name,
+                            id: socket.id,
+                            vote:0
+                        });
+                        io.to(roomId).emit('room', room);
+                    }
                 }
                 else {
                     socket.emit('event', 'Room not found');
@@ -70,26 +83,80 @@ module.exports = {
                     name: socket.name
                 });
             });
-
+            
             socket.on('kick', function (data) {
                 var roomId = data.roomId;
                 var name = data.name;
-                io.to(roomId).emit('kick',name);
+                io.to(roomId).emit('kick', name);
+            });
+            
+            socket.on('start', function (roomId) {
+                var room = rooms[roomId].box;
+                var spy = room[Math.floor(Math.random() * (room.length))];
+                rooms[roomId].spy = spy;
+                rooms[roomId].inPlay = true;
+                io.to(roomId).emit('start', {
+                    wordsBox:wordsBox.getRandomWords(),
+                    spy: spy
+                });
             });
 
-            socket.on('start', function (roomId) {
+            socket.on('end', function (data) {
+                var roomId = data.roomId;
                 var room = rooms[roomId];
-                var spy = room[Math.floor(Math.random() * (room.length))];
-                console.log(spy);
+                if (data.forced) {
+                    io.to(roomId).emit('end');
+                } else {
+                    var cSpy = room.box[0];
+                    for (var i = 0; i < room.box.length; i++) {
+                        if (room.box[i].vote > cSpy.vote) {
+                            cSpy = room.box[i];
+                        }
+                    }
+                    if(cSpy.vote == 0) {
+                        io.to(roomId).emit('end','The spy '+ room.spy.name+' won');
+                    } else if (cSpy == room.spy) {
+                        io.to(roomId).emit('end', 'Congratulations you caught the spy ' + room.spy.name);
+                    } else {
+                        io.to(roomId).emit('end', 'The spy ' + room.spy.name + ' won');
+                    }
+                }
+                room.inPlay = false;
+            });
+
+            socket.on('vote', function (data) {
+                var box = rooms[data.roomId].box;
+                var voter = data.voter;
+                var voted = data.voted;
+                var prevVote = data.prevVote;
+                if (prevVote) {
+                    for (var i = 0; i < box.length; i++) {
+                        var spy = box[i];
+                        if (spy.name == prevVote) {
+                            spy.vote--;
+                        }
+                    }
+                } 
+                for (var i = 0; i < box.length; i++) {
+                    var spy = box[i];
+                    if (spy.name == voted) {
+                        spy.vote++;
+                    }
+                }
+                io.to(data.roomId).emit('message', {
+                    message: voter + ' has voted ' + voted + ' to be the spy',
+                    name: 'SpyBox'
+                });
+
             });
         });
     },
-
-    spyboxApi: function (){
-
+    
+    spyboxApi: function () {
+        
         router.get();
-
+        
         return router;
     }
 
-} 
+}

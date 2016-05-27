@@ -1,0 +1,16 @@
+{
+
+
+"cities" : [ "new york", "hong kong", "london" , "tokoyo" , "dubai" , "paris", "madrid","seoul","rome","berlin" ],
+
+"transportation" : [ "ship", "submarine", "boat", "car" , "train", "motorcycle", "plane", "helicopter", "bike", "bus" ],
+
+"fruit" : ["apple","orange","pineapple","watermelon","grape","banana","mango","strawberry","kiwi","peach"],
+
+"sport":["basketball","tennis","baseball","hockey","soccer","football","golf","badminton","volleyball","ping pong"],
+
+"clothing":["shoe","sock","bra","boxer","hoodie","hat","scarf","pant","jacket","tuxedo"],
+
+"length":5
+
+}
