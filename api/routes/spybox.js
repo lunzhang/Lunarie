@@ -152,11 +152,4 @@ module.exports = {
         });
     },
     
-    spyboxApi: function () {
-        
-        router.get();
-        
-        return router;
-    }
-
 }

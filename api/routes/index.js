@@ -14,30 +14,6 @@ var ctrlRates = require('../controllers/rates.controller');
 router.get('/profile', auth, ctrlProfile.profileRead);
 router.get('/messages', ctrlMessage.getMessages);
 router.get('/rates/:period', ctrlRates.getRates);
-router.get('/calendar', function (req, res) {
-    fs.readFile('calendar.txt', function (err, data) {
-        res.status(200);
-        res.json({
-            "calendar" : data.toString()
-        });
-    });
-});
-router.get('/tv', function (req, res) {
-    fs.readFile('tv.txt', function (err, data) {
-        res.status(200);
-        res.json({
-            "tv" : data.toString()
-        });
-    });
-});
-router.get('/realtimenews', function (req, res) {
-    fs.readFile('realtimenews.txt', function (err, data) {
-        res.status(200);
-        res.json({
-            "realtimenews" : data.toString()
-        });
-    });
-});
 // authentication
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
