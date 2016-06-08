@@ -49,7 +49,7 @@ gulp.task('default', ['watch'], function () {
     })
     .on('restart', function () {
     });
-})
+});
 
 gulp.task('install', ['git-check'], function () {
     return bower.commands.install()
