@@ -11,11 +11,6 @@ var passport = require('passport');
 var routesApi = require('./api/routes/index');
 var app = express();
 
-app.set('view engine', 'ejs');
-
-app.use('/', routes);
-
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyParser.json());
@@ -26,6 +21,7 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'ng')));
 app.use(express.static(path.join(__dirname, 'ng2')));
 app.use('/api', routesApi);
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
