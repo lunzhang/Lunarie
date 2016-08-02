@@ -11,15 +11,17 @@ var passport = require('passport');
 var routesApi = require('./api/routes/index');
 var app = express();
 
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
-
 app.use(express.static(path.join(__dirname, 'ng')));
 app.use(express.static(path.join(__dirname, 'ng2')));
+
 app.use('/api', routesApi);
 app.use('/', routes);
 
@@ -36,8 +38,8 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
+    var status = err.status || 500;
+    res.status(status).send({
       message: err.message,
       error: err
     });
@@ -47,12 +49,12 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 else{
   app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+    var status = err.status || 500;
+    res.status(status).send({
+      message: err.message,
+      error: {}
+    });
   });
-});
 }
 
 module.exports = app;
