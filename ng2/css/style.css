@@ -4,3 +4,17 @@
 
 .navbar-brand {
   margin: 0; }
+
+#sword-list {
+  padding-top: 20px;
+  border-top: 1px solid black; }
+  #sword-list .col-sm-6 {
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+    margin-bottom: 20px; }
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }

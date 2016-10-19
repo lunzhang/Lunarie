@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <form (ngSubmit)="onSearch()" #searchForm="ngForm">
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="name">Name </label>
+          <input [(ngModel)]="search.name" class="form-control" name="name" #name="ngModel" placeholder="Name">
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="origin">Origin</label>
+          <input [(ngModel)]="search.origin" class="form-control" name="origin" #region="ngModel" placeholder="Origin">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <button type="submit" class="btn btn-primary" text-align="right" >Search</button>
+      </div>
+    </div>
+  </form>
+</div>
