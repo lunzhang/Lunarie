@@ -1,0 +1,17 @@
+<div id="keyboard" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-4">
+      <h5>Score : {{score}}</h5>
+    </div>
+    <div class="col-xs-4">
+        <h5>High Score : {{highScore}}</h5>
+    </div>
+    <div class="col-xs-4 text-right">
+      <button type="button" class="btn btn-success" (click)="start()">
+        Start
+      </button>
+    </div>
+  </div>
+  <row *ngFor="let row of rows" [keys]="row" class="row" (onEvent)="rowEvent($event)">
+  </row>
+</div>

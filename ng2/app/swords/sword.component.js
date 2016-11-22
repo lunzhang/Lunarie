@@ -21,8 +21,7 @@ var SwordComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'sword',
-            templateUrl: './sword.component.html',
-            styleUrl: './sword.component.css'
+            templateUrl: './sword.component.html'
         }), 
         __metadata('design:paramtypes', [])
     ], SwordComponent);

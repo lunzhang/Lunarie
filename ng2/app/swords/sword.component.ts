@@ -4,8 +4,7 @@ import { Swords } from './swords.model';
 @Component({
   moduleId: module.id,
   selector: 'sword',
-  templateUrl: './sword.component.html',
-  styleUrl:'./sword.component.css'
+  templateUrl: './sword.component.html'
 })
 
 export class SwordComponent {

@@ -14,6 +14,9 @@ var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
 var search_component_1 = require('./swords/search/search.component');
 var sword_component_1 = require('./swords/sword.component');
+var keyboard_component_1 = require('./keyboard/keyboard.component');
+var row_component_1 = require('./keyboard/row/row.component');
+var key_component_1 = require('./keyboard/key/key.component');
 var app_routes_1 = require('./app.routes');
 var common_1 = require('@angular/common');
 var AppModule = (function () {
@@ -22,7 +25,8 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, app_routes_1.routing],
-            declarations: [app_component_1.AppComponent, search_component_1.SearchComponent, sword_component_1.SwordComponent],
+            declarations: [app_component_1.AppComponent, search_component_1.SearchComponent, sword_component_1.SwordComponent,
+                keyboard_component_1.KeyboardComponent, row_component_1.RowComponent, key_component_1.KeyComponent],
             bootstrap: [app_component_1.AppComponent],
             providers: [{
                     provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy
